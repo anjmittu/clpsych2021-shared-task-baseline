@@ -13,28 +13,12 @@ This project contains the code for a suicide risk model based on a person's twee
 
 ## How to run
 ### Set up
-These steps should only be run once.
-
-1. First create a new conda environment.
-```
-conda create -n shared_task_baseline python
-```
-
-2. Activate the environment
-```
-source activate shared_task_baseline
-```
-
-3. Install the needed libraries
+Python3.6+ is required.  Install the needed libraries:
 ```
 pip install -r requirements.txt
 python -m nltk.downloader words
 ```
 
-4. Set the environment variable (The `set_env.sh` should be updated to point to the correct location)
-```
-source set_env.sh
-```
 
 ### Running
 All of the script are run with python
@@ -57,7 +41,15 @@ python risk_model/tokenize_data.py --input practice_data --output practice_data
 
 #### baseline_model.py
 This script will create the baseline model from the data and will output a results file.  The
-results file is a tsv file with the following form: `<user id>\t<predicted label>\t<pos probability>`.
+results file is a tsv file with the following form: 
+```
+[USER_ID] \t [LABEL] \t [SCORE]
+```
+Where `USER_ID` is the ID field from the source file, `LABEL` is either `1` for suicide
+or `0` for control, and `SCORE` is a real-valued score output score from your system,
+where larger numbers indicate the `SUICIDE` class and lower numbers indicate
+`CONTROL`.
+
 The baseline model is a bag of words model.  It uses count vectors with unigrams and bigrams and 
 Logistic Regression for classification. 
 
@@ -68,7 +60,7 @@ python risk_model/baseline_model.py --input practice_data --output practice_data
 
 #### evaluation.py
 This script will read the results created by the baseline_model.py and output a score.  The 
-script will output `<f1 score>, <true positive rate>, <false alarm rate>, <auc>`.
+script will output `<F1>, <F2>, <True Positive Rate>, <False Alarm Rate>, <AUC>`.
 
 Below is an example calling this script when the data resides in a folder `practice_data`:
 ```
