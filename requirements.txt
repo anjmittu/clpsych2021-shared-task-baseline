@@ -1,0 +1,6 @@
+sklearn
+spacy
+twikenizer 
+emoji
+nltk
+matplotlib

@@ -1,0 +1,12 @@
+*~
+__pycache__
+.idea
+data
+.vector_cache
+predictions.json
+logs/
+*.log
+*.prediction
+learning2assess
+slurm_scripts
+practice_data
