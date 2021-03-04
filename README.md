@@ -1,6 +1,8 @@
 # Suicide Risk Model
 This project contains the code for a suicide risk model based on a person's tweets.
 
+When running on NORC Enclave see: [README_ENCLAVE.md](README_ENCLAVE.md)
+
 ## Overview
 ### Directory Structure
 ```

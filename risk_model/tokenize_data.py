@@ -132,8 +132,14 @@ def main(input_file_path, output_file_path):
     if os.path.exists(testing_file_path):
         os.remove(testing_file_path)
 
+    print("Tokenizing training data")
     tokenize_file(os.path.join(input_file_path, "train.jsonl"), training_file_path)
-    tokenize_file(os.path.join(input_file_path, "test.jsonl"), testing_file_path)
+    if os.path.exists(os.path.join(input_file_path, "test.jsonl")):
+        print("Tokenizing test data")
+        tokenize_file(os.path.join(input_file_path, "test.jsonl"), testing_file_path)
+    else:
+        print("No test data found")
+    print("Done")
 
 
 if __name__ == '__main__':
