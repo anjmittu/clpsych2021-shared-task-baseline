@@ -20,12 +20,17 @@ These steps should only be run once.
 $ cp -r ~/teamdata/clpsych2021-shared-task-baseline ~/clpsych2021-shared-task-baseline
 ```
 
-2. Move into the copied directory
+2. Copy the nltk data directory to your home directory
+```
+$ cp -r ~/teamdata/nltk_data ~/nltk_data
+```
+
+3. Move into the copied directory
 ```
 cd ~/clpsych2021-shared-task-baseline
 ```
 
-3. Python 3.6+ is required. Install the needed libraries
+4. Python 3.6+ is required. Install the needed libraries
 ```
 module load python3.9.1
 pip install -r requirements.txt --user
@@ -115,9 +120,9 @@ There are three slurm scripts associated with this script:
 - `tokenize_data_182.slurm`
 - `tokenize_data_30.slurm`
 
-These can be run like:
+These can be run like, where ## is replaced with your team number:
 ```
-$ sbatch tokenize_data_practice.slurm
+$ sbatch -comment team## tokenize_data_practice.slurm
 ```
 
 ##### Expected output
@@ -151,9 +156,9 @@ There are three slurm scripts associated with this script:
 - `run_baseline_182.slurm`
 - `run_baseline_30.slurm`
 
-These can be run like:
+These can be run like, where ## is replaced with your team number:
 ```
-$ sbatch run_baseline_practice.slurm
+$ sbatch -comment team## run_baseline_practice.slurm
 ```
 
 
@@ -173,9 +178,9 @@ There are three slurm scripts associated with this script:
 - `evaluate_182.slurm`
 - `evaluate_30.slurm`
 
-These can be run like:
+These can be run like, where ## is replaced with your team number:
 ```
-$ sbatch evaluate_practice.slurm
+$ sbatch -comment team## evaluate_practice.slurm
 ```
 
 ##### Expected output
