@@ -20,14 +20,13 @@ def main(results_file_path):
                 if pred[1] != "0" and pred[1] != "1":
                     problem = True
                     print("{}: prediction should be either 0 or 1; prediction given {}".format(pred[0], pred[1]))
-                if pred[2] < 0 or pred[2] > 1:
-                    problem = True
-                    print("{}: probability should be between 0 and 1; probability given {}".format(pred[0], pred[2]))
                 predictions.append(pred[1])
                 probs.append(pred[2])
             except ValueError:
+                problem = True
                 print("{}: probability can not be made a float: {}".format(pred[0], pred[2]))
             except IndexError:
+                problem = True
                 print("{}: Missing values in result row: {}".format(pred[0], pred))
 
     truths = ["0"] * len(predictions)
@@ -37,6 +36,9 @@ def main(results_file_path):
         f2 = fbeta_score(truths, predictions, beta=2, average='binary', pos_label="1")
 
         tn, fp, fn, tp = confusion_matrix(truths, predictions).ravel()
+        
+        fpr, tpr, thresholds = roc_curve(truths, probs, pos_label="1")
+        auc_score = auc(fpr, tpr)
         
         if tp == 0 and fn == 0:
             print("There are no problems with the submission")
