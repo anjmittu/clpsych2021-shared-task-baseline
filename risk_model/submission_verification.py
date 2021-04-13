@@ -3,7 +3,7 @@ import csv
 from sklearn.metrics import f1_score, fbeta_score, confusion_matrix, roc_curve, auc
 
 """
-This will verification that the submission file is formatted correctly
+This will verify that the submission file is formatted correctly
 """
 
 
@@ -15,14 +15,20 @@ def main(results_file_path):
     with open(results_file_path) as rf:
         results = csv.reader(rf, delimiter="\t")
         for pred in results:
-            if pred[1] != "0" and pred[1] != "1":
-                problem = True
-                print("{}: prediction should be either 0 or 1; prediction given {}".format(pred[0], pred[1]))
-            if float(pred[2]) < 0 or float(pred[2]) > 1:
-                problem = True
-                print("{}: probability should be between 0 and 1; probability given {}".format(pred[0], pred[2]))
-            predictions.append(pred[1])
-            probs.append(float(pred[2]))
+            try:
+                pred[2] = float(pred[2])
+                if pred[1] != "0" and pred[1] != "1":
+                    problem = True
+                    print("{}: prediction should be either 0 or 1; prediction given {}".format(pred[0], pred[1]))
+                if pred[2] < 0 or pred[2] > 1:
+                    problem = True
+                    print("{}: probability should be between 0 and 1; probability given {}".format(pred[0], pred[2]))
+                predictions.append(pred[1])
+                probs.append(pred[2])
+            except ValueError:
+                print("{}: probability can not be made a float: {}".format(pred[0], pred[2]))
+            except IndexError:
+                print("{}: Missing values in result row: {}".format(pred[0], pred))
 
     truths = ["0"] * len(predictions)
 
@@ -39,7 +45,7 @@ def main(results_file_path):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Verifies the submission file is formatted correctly.')
+    parser = argparse.ArgumentParser(description='Verifies the submission file is formatted correctly')
     parser.add_argument('--results', help='path to the results file')
 
     args = parser.parse_args()
